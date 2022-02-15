@@ -1,0 +1,16 @@
+{
+  "appId": "com.strataly.wallet",
+  "appName": "Strata Wallet",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "build",
+  "server":{
+    "allowNavigation":[]
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

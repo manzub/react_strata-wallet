@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/assets/images/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scale=0, maximum-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app" />
+    <title>Strata Wallet</title>
+
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="./assets/vendor_components/bootstrap/dist/css/bootstrap.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="./assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.css">
+    <!--amcharts -->
+    <link href="https://www.amcharts.com/lib/3/plugins/export/export.css" rel="stylesheet" type="text/css" /> 
+    <!-- Data Table-->
+	  <link rel="stylesheet" type="text/css" href="./assets/vendor_components/datatable/datatables.min.css"/>
+	
+    <!-- theme style -->
+    <link rel="stylesheet" href="./assets/css/horizontal-menu.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <!-- Crypto Admin skins -->
+    <link rel="stylesheet" href="./assets/css/skin_color.css">
+
+  </head>
+  <body class="layout-top-nav light-skin theme-classic">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="wrapper" style="height:auto;min-height:100%;">
+      <div id="root"></div>
+    </div>
+    
+    <button id="pay" style="display: none;" onclick="MakePayment()"></button>
+    <!-- Rave Api -->
+    <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+    <script>
+      const MakePayment = () => {
+        const API_publicKey = "FLWPUBK_TEST-SANDBOXDEMOKEY-X";
+        // eslint-disable-next-line no-undef
+        const {email,amount,phone} = JSON.parse(sessionStorage.getItem('rave'));
+        var x = getpaidSetup({
+            PBFPubKey: API_publicKey,
+            customer_email: email,
+            amount,
+            customer_phone: phone,
+            currency: "NGN",
+            txref: "rave-123456",
+            meta: [{
+                metaname: "flightID",
+                metavalue: "AP1234"
+            }],
+            onclose: function() {},
+            callback: function(response) {
+                var txref = response.data.txRef; // collect txRef returned and pass to a                    server page to complete status check.
+                console.log("This is the response returned after a charge", response);
+                if (
+                    response.data.chargeResponseCode == "00" ||
+                    response.data.chargeResponseCode == "0"
+                ) {
+                    // redirect to a success page
+                } else {
+                    // redirect to a failure page.
+                }
+    
+                x.close(); // use this to close the modal immediately after payment.
+            }
+        });
+      }
+    </script>
+    <!-- js -->
+	  <script src="./assets/js/vendors.min.js"></script>
+    <!--Vendor -->
+	  <script src="./assets/vendor_components/apexcharts-bundle/dist/apexcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="./assets/vendor_components/Web-Ticker-master/jquery.webticker.min.js"></script>	
+    <!-- Crypto Admin App -->
+    <script src="./assets/js/jquery.smartmenus.js"></script>
+    <script src="./assets/js/menus.js"></script>
+    <script src="./assets/js/template.js"></script>
+    <script src="./assets/js/pages/dashboard.js"></script>
+    <script src="./assets/js/demo.js"></script>
+    
+  </body>
+</html>
